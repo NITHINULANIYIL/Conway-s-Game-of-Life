@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<html>
+    <head>
+        <title>Conway's Game of Life</title>
+    </head>
+    <body> <div align="center">
+        <canvas id = "game1"style="border: 5px solid #FF0066"></canvas></div>
+        <script>
+            var x = 130;
+            var y = 130;
+            var game1 = document.getElementById("game1")
+            var context = game1.getContext("2d")
+	    game1.width = 520
+            game1.height = 520
+            var p,q;           
+            var a = new Array(130)
+            for (var m = 0; m < 130; m++)
+                {
+		a[m] = new Array(130)
+		}           
+            for (var n = 0; n < 1000; n++) {
+                p = parseInt(Math.random()*10);
+                q = parseInt(Math.random()*10);
+                a[p][q] = 1;
+            }
+            function count(m, n) {
+                var l = 0;
+                if (a[m] != undefined) 
+		    {
+                    if (a[m][n-1] == 1) 
+			{
+			l++;
+			}
+                    if (a[m][n+1] == 1) 
+			{
+			l++;
+	                }
+		     }
+                if (a[m-1] != undefined) 
+		     {
+		    if (a[m-1][n] == 1) 
+     			{	
+			l++;
+			} 	                   
+                    if (a[m-1][n-1] == 1) 
+			{			
+			l++;
+			}                     
+		   if (a[m-1][n+1] == 1) 
+                        {
+                        l++;
+               		}
+		     }
+               if (a[m+1] != undefined)
+                   {
+                   if (a[m+1][n] == 1) 
+		   	{
+                        l++;
+                        } 
+                        if (a[m+1][n-1] == 1) 
+                        {
+                        l++;
+                        }
+                        if (a[m+1][n+1] == 1)
+                        {
+                        l++;
+                        }        
+                  }
+               return l;
+             }
+		
+
+	function start(r){
+		 var r = setInterval("game()", 10);
+		 return r
+		}
+
+            
+            function display(){
+            for (m = 0; m < 130; m++) {
+                for (n = 0; n < 130; n++)
+                {
+                    if (a[m][n] == 1) 
+			{
+      			context.fillStyle = 'red';
+                        }
+                    else {
+                        context.fillStyle = 'yellow';
+                        }
+                context.beginPath();
+                context.rect(n*4, m*4, 4,4);
+                context.closePath();
+                context.fill();
+                }
+		}
+	}
+
+           function game(){
+                var neighbours = 0
+                for (m = 0; m < 130; m++){
+                    for(n = 0; n<130; n++) {
+                        neighbours = count(m,n)
+                        if (neighbours < 2) 
+			{
+			a[m][n] = 0
+			}
+                        if (neighbours > 3)
+			{
+			a[m][n] = 0
+			}                        
+			if (neighbours === 3)
+			{
+			 a[m][n] = 1
+                        }
+		}
+            } display();
+             }
+
+        </script>
+<form><center>
+<input  type="button" value="start" onclick="start()">
+</center>
+</form>
+    </body>
+</html>
+
+
